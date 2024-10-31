@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html5>
+    <head>
+        <title>Exam Question Generator</title>
+        <!--Bootstrap-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="assets/Style.css"> <!--For the CSS-->
+    
+    </head>
+    <body>
+        <div class="row text-center" id="HeadingSection">
+            <h1>Exam Question Generator</h1>
+        </div>
+        <div class="row" id="InputSection"> <!--Section Stores the Input Elements-->
+            <div class="col-3" id="LeftSection"></div>
+            <div class="col-6" id="MidSection">
+                <div class="form-group" id="KeywordsInput"> <!--Allows user to input desired Keywords-->
+                    <label for="Input">Please enter your desired Keyword</label>
+                    <input type="email" class="form-control" id="Input" placeholder="Example: Cells" onchange="OptionStore('Input',Message)">
+                </div>
+                <br>
+                <div class="form-group" id="LevelChoice"> <!--Gives multiple choice for the level of question-->
+                    <label for="QuestionLevel">What level of question do you seek?</label>
+                    <select class="form-control" id="QuestionLevel" onchange="OptionStore('QuestionLevel',Level)">
+                        <option>GCSE</option>
+                        <option>A-Level</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group" id="SubjectChoice"> <!--Gives multiple choice for the Subject-->
+                    <label for="QuestionSubject">What is the desired subject?</label>
+                    <select class="form-control" id="QuestionSubject" onchange="OptionStore('QuestionSubject',Subject)">
+                        <option>Biology</option>
+                        <option>Physics</option>
+                        <option>Chemistry</option>
+                        <option>Computer Science</option>
+                        <option>Maths</option>
+                    </select>
+                </div>
+                <br>
+                <div class="form-group" id="ExamboardChoice"> <!--Gives multiple choice for the Examboard-->
+                    <label for="QuestionExamboard">Choose your desired Examboard?</label>
+                    <select class="form-control" id="QuestionExamboard" onchange="OptionStore('QuestionExamboard',Board)">
+                        <option>AQA</option>
+                        <option>OCR</option>
+                    </select>
+                </div>
+                <br>
+                <div class="text-center" id="SubmitButton">
+                    <button type="submit" class="btn btn-primary" onclick="GenerateQuestion()">Generate Question</button>
+                </div>
+            </div>
+            <div class="col-3" id="RightSection"></div>
+        </div>
+        <div class="row" id="OutputSection"> <!--Section Stores the Location of the Output-->
+            <div class="col"></div>
+            <div class="col-8" id="OutputArea">
+                <br>
+                <div class="text-center" id="Loading">
+                    <p>Please wait while the AI generates a question</p>
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only"></span>
+                    </div>
+                </div>
+                <div id="QuestioAndAnswer">
+                    <div id="QuestionOutput">
+                        <p>Question:</p>
+                        <div class="Box" id="QuestionContainer">
+                            <p>The Question will be here</p>
+                        </div>
+                    </div>
+                    <div id="AnswerOutput">
+                        <p>Answer:</p>
+                        <div class="Box" id="AnswerContainer">
+                            <p>The Answer will be here</p>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row" id="FooterSection"> <!--Section Stores the Footer-->
+            <footer class="" id="Footer">
+                <div class="row">
+                    <div class="col-6"></div>
+                    <div class="col-6" id="WhereLinks">
+                        <h6 class="FooterText">Where to find us</h6>
+                        <hr>
+                        <!-- Facebook -->
+                        <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                <div class="row">
+                    <p class="FooterText">Created by: Bryce, Reuben, Michael and Taha</p>
+                </div>
+            </footer>
+        </div>
+        <script>
+            // Required Objects
+            Message = "";
+            Subject = "Biology"
+            Level = "GCSE";
+            Board = "AQA";
+
+            // Objects
+            Loading = document.getElementById("Loading"); // Allows the loading area to be toggled
+            QuestionAndAnswer = document.getElementById("QuestioAndAnswer"); // Allows the Question area to be toggled
+
+            // Temporary Objects
+            var QuestionLevelArray = ["GCSE", "A-Level"];
+            var QuestionSubjectArray = ["Biology", "Physics", "Chemistry", "Computer Science", "Maths"];
+            var QuestionExamboardArray = ["AQA", "OCR"];
+
+
+            // Sets the webpage to its default look
+            function Default()
+            {
+                Loading.style.display = "none";
+                QuestionAndAnswer.style.display = "none";
+                JSONSelect();
+            }
+
+            
+            // Read JSON Select Elements
+            function JSONSelect(){ // Function reads external JSON file and stores its values
+                fetch("./assets/JSON/SelectElements.json")
+                    .then(res => res.json())
+                    .then(data => {
+                        // Changes the options given on the Select elements
+                        AddSelectElements("QuestionLevel",data.QuestionLevel);
+                        AddSelectElements("QuestionSubject",data.QuestionSubject);
+                        AddSelectElements("QuestionExamboard",data.QuestionExamboard);
+                    });
+                
+            }
+
+            // Function for each Select element
+            function AddSelectElements(ID,Array)// Function reads an array and adds a new option
+            {
+                CurrentSelect = document.getElementById(ID); // Stores the current select to add
+                while (CurrentSelect.options.length > 0) { // Removes previous options
+                    CurrentSelect.remove(0);
+                }
+                for(i=0; i < Array.length ;i++) // Reads through given array and adds the element at the given position
+                {
+                    OptionElement = document.createElement("option");
+                    NewChoice = document.createTextNode(Array[i]);
+                    OptionElement.appendChild(NewChoice); // Adds the new choice to the Option Element
+                    CurrentSelect.appendChild(OptionElement); // Adds new option to the Select element
+                }
+            }
+
+            // Function reads current option and stores it
+            function OptionStore(ID, RequiredObject){
+                Choice = document.getElementById(ID).value;
+                console.log(Choice);
+                RequiredObject = Choice;
+            }
+
+            //Function for the Generate Question Button
+            function GenerateQuestion() 
+            {
+                // Creates spinning circle
+                Loading.style.display = "block";
+
+                DataToInput = {
+                    "message": Message,
+                    "subject": Subject,
+                    "level": Level,
+                    "board": Board
+                }
+
+                JSONData = JSON.stringify(DataToInput);
+
+                // Creates a file and writes into it
+            }
+
+            Default(); // Sets the webpage to its default layout
+
+
+            /*
+            Use Formdata to add create and store the input data
+            */
+        </script>
+    </body>
+</html5>
