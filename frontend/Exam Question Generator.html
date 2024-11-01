@@ -107,7 +107,7 @@
             Loading = document.getElementById("Loading"); // Allows the loading area to be toggled
             QuestionAndAnswer = document.getElementById("QuestioAndAnswer"); // Allows the Question area to be toggled
 
-            // Temporary Objects
+            // Temporary Objectss
             var QuestionLevelArray = ["GCSE", "A-Level"];
             var QuestionSubjectArray = ["Biology", "Physics", "Chemistry", "Computer Science", "Maths"];
             var QuestionExamboardArray = ["AQA", "OCR"];
@@ -123,7 +123,7 @@
 
             
             // Read JSON Select Elements
-            function JSONSelect(){ // Function reads external JSON file and stores its values
+            function JSONSelect(){ // Function reads external JSON file and stores its values   
                 fetch("./assets/JSON/SelectElements.json")
                     .then(res => res.json())
                     .then(data => {
