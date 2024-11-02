@@ -1,0 +1,32 @@
+.btn-primary{
+    background-color: gray;
+    border-color: gray;
+}
+#HeadingSection {
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+}
+h1{
+    color: #6552D0;
+}
+.Box{
+    margin-bottom: 2vh;
+    border: 0.5vh solid #c7befa;
+    background-color: #c7befa;
+    border-radius: 2vh;
+}
+footer {
+    padding-bottom: 3vh;
+    padding-top: 3vh;
+    background-color: #17203D;
+}
+hr{
+    width: 20vh;
+    margin-top: -0.5vh;
+    border: none;
+    height: 0.5vh;
+    background-color: #6552D0
+}
+.FooterText{
+    color: rgb(233, 233, 233);
+}
