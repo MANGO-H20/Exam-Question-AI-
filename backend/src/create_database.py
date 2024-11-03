@@ -44,28 +44,28 @@ def get_embedding(data):
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=400, chunk_overlap=20)
 
 # Setting up metadata for the document
-for path,folders,files in os.walk(exam_paper_folder):
-
-    for file in files:
-        if "Alevel" in path:
-            metadata["level"] = "A-level"  
-        for subject in subjects:
-            if subject in path:
-                metadata["subject"] = subject 
-        if "MS" in file:
-            metadata["markscheme"] = True
-        loader = PyPDFLoader(path + "\\" + file)
-        pdf_doc = loader.load()
-        for pdf_page in pdf_doc:
-            starting_metadata = pdf_page.metadata
-            combined_metadata = dict(starting_metadata, **metadata)
-            pdf_page.metadata = combined_metadata
-        documents = text_splitter.split_documents(pdf_doc)
-        # Prepare documents for insertion
-        docs_to_insert = [{
-            "text": doc.page_content,
-            "embedding": get_embedding(doc.page_content),
-            "metadata": doc.metadata,
-        } for doc in documents]
-        result = collection.insert_many(docs_to_insert)
+def addfiles():
+    for path,folders,files in os.walk(exam_paper_folder):
+        for file in files:
+            if "Alevel" in path:
+                metadata["level"] = "A-level"  
+            for subject in subjects:
+                if subject in path:
+                    metadata["subject"] = subject 
+            if "MS" in file:
+                metadata["markscheme"] = True
+            loader = PyPDFLoader(path + "\\" + file)
+            pdf_doc = loader.load()
+            for pdf_page in pdf_doc:
+                starting_metadata = pdf_page.metadata
+                combined_metadata = dict(starting_metadata, **metadata)
+                pdf_page.metadata = combined_metadata
+            documents = text_splitter.split_documents(pdf_doc)
+            # Prepare documents for insertion
+            docs_to_insert = [{
+                "text": doc.page_content,
+                "embedding": get_embedding(doc.page_content),
+                "metadata": doc.metadata,
+            } for doc in documents]
+            result = collection.insert_many(docs_to_insert)
 

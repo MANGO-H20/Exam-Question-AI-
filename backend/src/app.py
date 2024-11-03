@@ -1,12 +1,23 @@
 from flask import Flask, request
-
+from flask_cors import CORS
 app = Flask(__name__)
 
-
-@app.route('/new_exam_question',method=['POST'])
+CORS(app) 
+data_form_user = {}
+@app.route('/',methods=['POST'])
 def new_exam_question():
     if request.method == 'POST':
         message = request.form['message']
         subject = request.form['subject']
         level = request.form['level']
         board = request.form['board']
+        data_form_user = {
+            "message":message,
+            "subject": subject,
+            "level": level,
+            "board": board,
+                }
+        return data_form_user
+
+if __name__ == "__main__":
+    app.run(debug=True)

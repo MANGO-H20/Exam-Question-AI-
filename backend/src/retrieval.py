@@ -5,12 +5,6 @@ import time
 from sentence_transformers import SentenceTransformer
 uri = os.getenv('mongo_pass')
 
-subject ="" 
-level = "A-level"
-board = "AQA"
-markscheme = True
-
-
 client = pymongo.MongoClient(uri)
 db = client['exam-papers']
 collection = db['exam-papers']
@@ -24,6 +18,9 @@ def get_embedding(data):
 #Create index model with filters 
 index_name="try-13"
 
+query = {
+    
+}
 def get_query_results(query):
     """Gets results from a vector search query."""
     query_embedding = get_embedding(query)
