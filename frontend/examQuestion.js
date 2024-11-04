@@ -96,22 +96,3 @@ myform.addEventListener("submit", event =>{
     .then(data => console.log(data))
     .catch(error => console.log(error))
 });
-function submitForm(e){
-    e.preventDefault();
-    console.log(myform)
-    var formData = new FormData(myform);
-    console.log(formData)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('network returns error');
-        }
-        return response.json();
-    })
-    .then((resp) => {
-        console.log("response")
-    })
-    .catch((error) => {
-        // Handle error
-        console.log("error ", error);
-    });
-}
