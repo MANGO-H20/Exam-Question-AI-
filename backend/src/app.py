@@ -1,5 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS
+from retrieval import returnToUser
 app = Flask(__name__)
 
 CORS(app) 
@@ -17,6 +18,8 @@ def new_exam_question():
             "level": level,
             "board": board,
                 }
+        #relevant_docs = returnToUser(data_form_user)
+        
         return data_form_user
 
 if __name__ == "__main__":

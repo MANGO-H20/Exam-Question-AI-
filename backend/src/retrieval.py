@@ -18,12 +18,9 @@ def get_embedding(data):
 #Create index model with filters 
 index_name="try-13"
 
-query = {
-    
-}
 def get_query_results(query):
     """Gets results from a vector search query."""
-    query_embedding = get_embedding(query)
+    query_embedding = get_embedding(query["message"])
     vector_pipeline = [
         {
                 "$vectorSearch": {
@@ -31,16 +28,16 @@ def get_query_results(query):
                 "queryVector": query_embedding,
                 "path": "embedding",
                 "exact": True,
-                "limit": 5,  
+                "limit": 9,  
 
                 
                 "filter": {
                     "$and":[
                         {
-                            "metadata.subject": subject,
-                            "metadata.board": board,
-                            "metadata.level":level,
-                            "metadata.markscheme": markscheme
+                            "metadata.subject": query["subject"],
+                            "metadata.board": query["board"],
+                            "metadata.level": query["level"],
+                            "metadata.markscheme": False
                         }
                     ]
                     
@@ -64,4 +61,6 @@ def get_query_results(query):
     return array_of_results
 
 import pprint
-pprint.pprint(get_query_results("cells"))
+def returnToUser(query):
+    return get_query_results(query)
+
