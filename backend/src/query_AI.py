@@ -28,7 +28,7 @@ def query_AI(conditions, docs):
     print(context_string)
     print(output.choices[0].message.content)
 conditions = {
-    "message" : "Kp",
+    "message" : "Kp and Kc",
     "subject": "A-levelChemistry",
     "board": "AQA",
     "level": "A-level"
