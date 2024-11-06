@@ -58,6 +58,7 @@ def get_query_results(query):
 
     for doc in results_vector:
         array_of_results.append(doc)
+    print(array_of_results)
     return array_of_results
 
 import pprint

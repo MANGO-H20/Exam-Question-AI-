@@ -34,7 +34,9 @@ subjects = [
 "A-levelHistory",
 "A-levelPhysics",
 ]
+
 model = SentenceTransformer("nomic-ai/nomic-embed-text-v1", trust_remote_code=True)
+
     
 # Define a function to generate embeddings
 def get_embedding(data):
@@ -45,7 +47,10 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=400, chunk_overlap=20)
 
 # Setting up metadata for the document
 def addfiles():
+    count = 0
     for path,folders,files in os.walk(exam_paper_folder):
+
+
         for file in files:
             if "Alevel" in path:
                 metadata["level"] = "A-level"  
@@ -53,19 +58,29 @@ def addfiles():
                 if subject in path:
                     metadata["subject"] = subject 
             if "MS" in file:
+                count += 1
                 metadata["markscheme"] = True
+            else:
+                metadata["markscheme"] = False
+
+            
+            
             loader = PyPDFLoader(path + "\\" + file)
             pdf_doc = loader.load()
             for pdf_page in pdf_doc:
                 starting_metadata = pdf_page.metadata
                 combined_metadata = dict(starting_metadata, **metadata)
                 pdf_page.metadata = combined_metadata
-            documents = text_splitter.split_documents(pdf_doc)
+            documents = text_splitter.split_documents(pdf_doc) 
             # Prepare documents for insertion
             docs_to_insert = [{
                 "text": doc.page_content,
-                "embedding": get_embedding(doc.page_content),
+                "embedding": 1,
                 "metadata": doc.metadata,
             } for doc in documents]
-            result = collection.insert_many(docs_to_insert)
+            result = collection.insert_many(docs_to_insert) 
+            
+            
+    print(count)
 
+addfiles()

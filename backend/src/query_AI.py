@@ -7,9 +7,10 @@ def query_AI(conditions, docs):
     query = f"""
     Generate the best question on {conditions["message"]} in the 
     subject {conditions["subject"]} at the level of {conditions["level"]}
-    of the exam board {conditions["board"]} Ignore this number : 2
-    Add the marks to the question in square brackets 
+    of the exam board {conditions["board"]} Ignore this number : 58
+    Add the marks to the question in square brackets and give us an answer in a markscheme for the question 
     NO HELP GIVEN ONLY QUESTION 
+    HARSH MARKING 
     """ 
     context_string = " ".join([doc["text"] for doc in docs])
     print(context_string)
@@ -23,15 +24,15 @@ def query_AI(conditions, docs):
 
     output = llm.chat_completion(
     messages=[{"role": "user", "content": prompt}],
-    max_tokens=200
+    max_tokens=500
     )
     print(context_string)
     print(output.choices[0].message.content)
 conditions = {
-    "message" : "Kp",
-    "subject": "A-levelChemistry",
+    "message" : "Rounding",
+    "subject": "Maths",
     "board": "AQA",
-    "level": "A-level"
+    "level": "GCSE"
 }
 query_AI(conditions,get_query_results(conditions))
 
