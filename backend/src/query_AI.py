@@ -1,9 +1,10 @@
 import os
 from retrieval import get_query_results
 from huggingface_hub import InferenceClient
+from langchain_openai import ChatOpenAI
 
-def query_AI(conditions, docs):
-
+def query_AI(conditions):
+    docs = get_query_results(conditions)
     query = f"""
     Generate the best question on {conditions["message"]} in the 
     subject {conditions["subject"]} at the level of {conditions["level"]}
@@ -18,21 +19,26 @@ def query_AI(conditions, docs):
     {context_string}
     Question: {query}
     """
-    llm = InferenceClient(
-    "mistralai/Mistral-7B-Instruct-v0.3",
-    token = os.getenv("huggingFace"))
+    token = os.getenv("chatgpt");
+    llm = ChatOpenAI(
+        model="gpt-4o-mini",
+        temperature=0,
+        max_tokens=500,
+        api_key= token
 
-    output = llm.chat_completion(
-    messages=[{"role": "user", "content": prompt}],
-    max_tokens=500
     )
-    print(context_string)
-    print(output.choices[0].message.content)
+    message = [
+        {"role": "user", "content": prompt}
+    ]
+    output = llm.invoke(message
+    )
+    #out = output.choices[0].message.content
+    return output.content
 conditions = {
     "message" : "Rounding",
     "subject": "Maths",
     "board": "AQA",
     "level": "GCSE"
 }
-query_AI(conditions,get_query_results(conditions))
+print(query_AI(conditions))
 
