@@ -1,6 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-from retrieval import returnToUser
+from query_AI import query_AI
 app = Flask(__name__)
 
 CORS(app) 
@@ -19,8 +19,8 @@ def new_exam_question():
             "board": board,
                 }
         #relevant_docs = returnToUser(data_form_user)
-        
-        return data_form_user
+        question_answer = query_AI(data_form_user) 
+        return jsonify(question_answer)
 
 if __name__ == "__main__":
     app.run(debug=True)

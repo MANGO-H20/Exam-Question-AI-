@@ -60,7 +60,4 @@ def get_query_results(query):
         array_of_results.append(doc)
     return array_of_results
 
-import pprint
-def returnToUser(query):
-    return get_query_results(query)
 

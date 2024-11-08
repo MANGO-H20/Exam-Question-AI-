@@ -1,15 +1,17 @@
 import os
 from retrieval import get_query_results
 from huggingface_hub import InferenceClient
+from langchain_openai import ChatOpenAI
 
-def query_AI(conditions, docs):
-
+def query_AI(conditions):
+    docs = get_query_results(conditions)
     query = f"""
     Generate the best question on {conditions["message"]} in the 
     subject {conditions["subject"]} at the level of {conditions["level"]}
-    of the exam board {conditions["board"]} Ignore this number : 2
-    Add the marks to the question in square brackets 
+    of the exam board {conditions["board"]} Ignore this number : 58
+    Add the marks to the question in square brackets and give us an answer in a markscheme for the question 
     NO HELP GIVEN ONLY QUESTION 
+    HARSH MARKING 
     """ 
     context_string = " ".join([doc["text"] for doc in docs])
     print(context_string)
@@ -17,21 +19,26 @@ def query_AI(conditions, docs):
     {context_string}
     Question: {query}
     """
-    llm = InferenceClient(
-    "mistralai/Mistral-7B-Instruct-v0.3",
-    token = os.getenv("huggingFace"))
+    token = os.getenv("chatgpt");
+    llm = ChatOpenAI(
+        model="gpt-4o-mini",
+        temperature=0,
+        max_tokens=500,
+        api_key= token
 
-    output = llm.chat_completion(
-    messages=[{"role": "user", "content": prompt}],
-    max_tokens=200
     )
-    print(context_string)
-    print(output.choices[0].message.content)
+    message = [
+        {"role": "user", "content": prompt}
+    ]
+    output = llm.invoke(message
+    )
+    #out = output.choices[0].message.content
+    return output.content
 conditions = {
     "message" : "Kp and Kc",
     "subject": "A-levelChemistry",
     "board": "AQA",
     "level": "A-level"
 }
-query_AI(conditions,get_query_results(conditions))
+print(query_AI(conditions))
 
