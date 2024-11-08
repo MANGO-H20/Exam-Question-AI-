@@ -2,3 +2,4 @@
 .venv
 file-sorter.py
 WebScraper
+__pycache__
