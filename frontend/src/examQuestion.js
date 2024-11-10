@@ -11,21 +11,21 @@ QuestionAndAnswer = document.getElementById("QuestioAndAnswer"); // Allows the Q
 // Temporary Objectss
 var QuestionLevelArray = ["GCSE", "A-Level"];
 var QuestionSubjectArray = ["Biology", "Physics", "Chemistry", "Computer Science", "Maths"];
-var QuestionExamboardArray = ["AQA", "OCR"];
+var QuestionExamboardArray = ["AQA"];
 
 
 // Sets the webpage to its default look
 function Default()
 {
     Loading.style.display = "none";
-    QuestionAndAnswer.style.display = "none";
+    //QuestionAndAnswer.style.display = "none";
     JSONSelect();
 }
 
 
 // Read JSON Select Elements
 function JSONSelect(){ // Function reads external JSON file and stores its values   
-    fetch("./assets/JSON/SelectElements.json")
+    fetch("../assets/JSON/SelectElements.json")
         .then(res => res.json())
         .then(data => {
             // Changes the options given on the Select elements
@@ -84,32 +84,33 @@ Default(); // Sets the webpage to its default layout
 Use Formdata to add create and store the input data
 */
 var myform = document.getElementById("exam-question-spec");
-myform.addEventListener("submit", event =>{
+myform.addEventListener("submit", async event =>{
     event.preventDefault()
     const formData = new FormData(myform);
     const data = new URLSearchParams(formData)
-    fetch("http://127.0.0.1:5000/", {
+    try{
+    const res = await fetch("http://127.0.0.1:5000/", {
         method: "POST",
         body: data,
     })
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
-});
-function submitForm(e){
-    e.preventDefault();
-    console.log(myform)
-    var formData = new FormData(myform);
-    console.log(formData)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('network returns error');
-        }
-        return response.json();
+    newdata = res.json().then((result)=>{
+        question_data = result.split("Markscheme:")
+        question = question_data[0] 
+        answer = question_data[1]
+        output_question = document.getElementById("ActualQuestion")
+        output_question.innerHTML = question
+        output_answer = document.getElementById("ActualAnswer")
+        output_answer.innerHTML = answer
     })
+    //
+    //
     
-    .catch((error) => {
-        // Handle error
-        console.log("error ", error);
-    });
-}
+    if(!res.ok){
+        console.log("problem")
+    }
+    }
+    catch(error){
+        console.log(error)
+
+    }
+});

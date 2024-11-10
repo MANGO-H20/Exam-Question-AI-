@@ -44,7 +44,6 @@
                             <label for="QuestionExamboard">Choose your desired Examboard?</label>
                             <select name="board" class="form-control" id="QuestionExamboard" onchange="OptionStore('QuestionExamboard',Board)">
                                 <option>AQA</option>
-                                <option>OCR</option>
                             </select>
                         </div>
                         <br>
@@ -70,13 +69,13 @@
                         <div id="QuestionOutput">
                             <p>Question:</p>
                             <div class="Box" id="QuestionContainer">
-                                <p>The Question will be here</p>
+                                <p id="ActualQuestion">The Question will be here</p>
                             </div>
                         </div>
                         <div id="AnswerOutput">
                             <p>Answer:</p>
                             <div class="Box" id="AnswerContainer">
-                                <p>The Answer will be here</p>
+                                <p id="ActualAnswer">The Answer will be here</p>
                             </div>
                         </div>
                     </div>

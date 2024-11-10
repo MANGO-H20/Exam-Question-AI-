@@ -8,7 +8,7 @@ def query_AI(conditions):
     query = f"""
     Generate the best question on {conditions["message"]} in the 
     subject {conditions["subject"]} at the level of {conditions["level"]}
-    of the exam board {conditions["board"]} Ignore this number : 58
+    of the exam board {conditions["board"]} 
     Add the marks to the question in square brackets and give us an answer in a markscheme for the question 
     NO HELP GIVEN ONLY QUESTION 
     HARSH MARKING 
@@ -23,7 +23,7 @@ def query_AI(conditions):
     llm = ChatOpenAI(
         model="gpt-4o-mini",
         temperature=0,
-        max_tokens=500,
+        max_tokens=50,
         api_key= token
 
     )
@@ -40,5 +40,4 @@ conditions = {
     "board": "AQA",
     "level": "GCSE"
 }
-print(query_AI(conditions))
 
