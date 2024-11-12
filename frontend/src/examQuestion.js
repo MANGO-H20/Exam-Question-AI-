@@ -93,6 +93,7 @@ myform.addEventListener("submit", async event =>{
         method: "POST",
         body: data,
     })
+    Loading.style.display = "none";
     newdata = res.json().then((result)=>{
         question_data = result.split("Markscheme:")
         question = question_data[0] 

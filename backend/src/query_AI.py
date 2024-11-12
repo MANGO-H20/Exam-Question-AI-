@@ -2,7 +2,7 @@ import os
 from retrieval import get_query_results
 from huggingface_hub import InferenceClient
 from langchain_openai import ChatOpenAI
-
+import random
 def query_AI(conditions):
     docs = get_query_results(conditions)
     query = f"""
@@ -12,9 +12,9 @@ def query_AI(conditions):
     Add the marks to the question in square brackets and give us an answer in a markscheme for the question 
     NO HELP GIVEN ONLY QUESTION 
     HARSH MARKING 
+    Random Factor DO NOT INCLUDE but take into consideration ({random.randint(0,100)})
     """ 
     context_string = " ".join([doc["text"] for doc in docs])
-    print(context_string)
     prompt = f"""Use the following pieces of context to answer the question at the end.
     {context_string}
     Question: {query}
@@ -40,4 +40,3 @@ conditions = {
     "board": "AQA",
     "level": "GCSE"
 }
-
