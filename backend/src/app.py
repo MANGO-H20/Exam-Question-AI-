@@ -7,7 +7,8 @@ CORS(app)
 @app.route('/',methods=['POST'])
 def new_exam_question():
     if request.method == 'POST':
-        message = request.form['message']
+        #gets data of user from webpage
+        message = request.form['message'] 
         subject = request.form['subject']
         level = request.form['level']
         board = request.form['board']
@@ -17,8 +18,9 @@ def new_exam_question():
             "level": level,
             "board": board,
                 }
-        question_answer = query_AI(data_form_user) 
-        return jsonify(question_answer)
+        question_answer = query_AI(data_form_user) #returns question
+        return jsonify(question_answer) #returns json file
 
+#set contasnt loop
 if __name__ == "__main__":
     app.run(debug=True)

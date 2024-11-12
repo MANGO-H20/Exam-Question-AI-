@@ -3,6 +3,8 @@ from retrieval import get_query_results
 from huggingface_hub import InferenceClient
 from langchain_openai import ChatOpenAI
 import random
+
+#sets a query request to the ai model returning question
 def query_AI(conditions):
     docs = get_query_results(conditions)
     query = f"""
@@ -19,6 +21,7 @@ def query_AI(conditions):
     {context_string}
     Question: {query}
     """
+    #gets the chatgpt aki key from .env
     token = os.getenv("chatgpt");
     llm = ChatOpenAI(
         model="gpt-4o-mini",
@@ -34,6 +37,7 @@ def query_AI(conditions):
     )
     #out = output.choices[0].message.content
     return output.content
+
 conditions = {
     "message" : "Rounding",
     "subject": "Maths",

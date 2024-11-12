@@ -18,6 +18,7 @@ def get_embedding(data):
 #Create index model with filters 
 index_name="try-13"
 
+#function will query database from requirments specified
 def get_query_results(query):
     """Gets results from a vector search query."""
     query_embedding = get_embedding(query["message"])
@@ -53,9 +54,11 @@ def get_query_results(query):
         }
     ]
 
+    #filter documents in the database that meet requirments from filter
     results_vector = collection.aggregate(vector_pipeline)
     array_of_results = []
 
+    #loops through all doccuments and appends them to the list
     for doc in results_vector:
         array_of_results.append(doc)
     return array_of_results
