@@ -1,6 +1,5 @@
 import os 
 import pymongo
-from pymongo.operations import SearchIndexModel
 import time 
 from sentence_transformers import SentenceTransformer
 uri = os.getenv('mongo_pass')
