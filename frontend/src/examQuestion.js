@@ -119,7 +119,6 @@ myform.addEventListener("submit", async event =>{
     newdata = res.json().then((result)=>{
         question_data = result.split("Markscheme:")
         question = question_data[0] 
-        question
         answer = question_data[1]
         output_question = document.getElementById("ActualQuestion")
         question = question.replace("Question: ","");
