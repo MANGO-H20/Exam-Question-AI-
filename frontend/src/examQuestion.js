@@ -73,17 +73,14 @@ function GenerateQuestion()
     // Creates spinning circle
     ShowAnswer(true);
     Loading.style.display = "block";
-    QuestionAndAnswer.style.display = "none"; /////
+    QuestionAndAnswer.style.display = "block"; /////
     DataToInput = {
         "message": Message,
         "subject": Subject,
         "level": Level,
         "board": Board
     }
-
     JSONData = JSON.stringify(DataToInput);
-
-    // Creates a file and writes into it
 }
 
 AnswerChoice = false;
@@ -122,8 +119,10 @@ myform.addEventListener("submit", async event =>{
     newdata = res.json().then((result)=>{
         question_data = result.split("Markscheme:")
         question = question_data[0] 
+        question
         answer = question_data[1]
         output_question = document.getElementById("ActualQuestion")
+        question = question.replace("Question: ","");
         output_question.innerHTML = question
         output_answer = document.getElementById("ActualAnswer")
         output_answer.innerHTML = answer
