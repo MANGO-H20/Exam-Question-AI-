@@ -1,5 +1,15 @@
 {
     "QuestionLevel":["GCSE", "A-Level"], 
-    "QuestionSubject":["Biology", "Physics", "Chemistry", "Computer Science", "Maths"], 
+    "QuestionSubject":["Chemistry",
+"EnglishLanguage",
+"EnglishLiterature",
+"Maths",
+"FutherMaths",
+"Biology",
+"A-levelBiology",
+"A-levelChemistry",
+"A-levelEconomics",
+"A-levelMaths",
+"A-levelPhysics"], 
     "QuestionExamboard":["AQA", "OCR"]
 }
