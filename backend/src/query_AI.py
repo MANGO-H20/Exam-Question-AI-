@@ -1,6 +1,5 @@
 import os
 from retrieval import get_query_results
-from huggingface_hub import InferenceClient
 from langchain_openai import ChatOpenAI
 import random
 
@@ -37,10 +36,3 @@ def query_AI(conditions):
     )
     #out = output.choices[0].message.content
     return output.content
-
-conditions = {
-    "message" : "Rounding",
-    "subject": "Maths",
-    "board": "AQA",
-    "level": "GCSE"
-}
