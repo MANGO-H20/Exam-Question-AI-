@@ -7,6 +7,7 @@ Board = "AQA";
 // Objects
 Loading = document.getElementById("Loading"); // Allows the loading area to be toggled
 QuestionAndAnswer = document.getElementById("QuestioAndAnswer"); // Allows the Question area to be toggled
+AnswerArea =  document.getElementById("AnswerContainer"); // Allows the Answer area to be toggled
 
 // Temporary Objectss
 var QuestionLevelArray = ["GCSE", "A-Level"];
@@ -18,7 +19,9 @@ var QuestionExamboardArray = ["AQA"];
 function Default()
 {
     Loading.style.display = "none";
-    //QuestionAndAnswer.style.display = "none";
+    QuestionAndAnswer.style.display = "none";
+    AnswerArea.style.display = "none";
+    ShowAnswer(true);
     JSONSelect();
 }
 
@@ -56,6 +59,11 @@ function AddSelectElements(ID,Array)// Function reads an array and adds a new op
 function OptionStore(ID, RequiredObject){
     Choice = document.getElementById(ID).value;
     console.log(Choice);
+    
+    if(Choice.includes("A-level")){
+        Level = "A-Level";
+        document.getElementById("QuestionLevel").selectedIndex = 1;
+    }
     RequiredObject = Choice;
 }
 
@@ -63,8 +71,9 @@ function OptionStore(ID, RequiredObject){
 function GenerateQuestion() 
 {
     // Creates spinning circle
+    ShowAnswer(true);
     Loading.style.display = "block";
-
+    QuestionAndAnswer.style.display = "none"; /////
     DataToInput = {
         "message": Message,
         "subject": Subject,
@@ -75,6 +84,21 @@ function GenerateQuestion()
     JSONData = JSON.stringify(DataToInput);
 
     // Creates a file and writes into it
+}
+
+AnswerChoice = false;
+AnswerButton = document.getElementById("AnswerButton")
+function ShowAnswer(returntoDefault){
+    if(AnswerChoice || returntoDefault){
+        AnswerButton.innerHTML = "&darr;";
+        AnswerArea.style.display = "none";
+        AnswerChoice = false;
+    }
+    else{
+        AnswerButton.innerHTML = "&uarr;";
+        AnswerArea.style.display = "block";
+        AnswerChoice = true;
+    }
 }
 
 Default(); // Sets the webpage to its default layout
@@ -94,6 +118,7 @@ myform.addEventListener("submit", async event =>{
         body: data,
     })
     Loading.style.display = "none";
+    QuestionAndAnswer.style.display = "block";
     newdata = res.json().then((result)=>{
         question_data = result.split("Markscheme:")
         question = question_data[0] 
@@ -112,6 +137,5 @@ myform.addEventListener("submit", async event =>{
     }
     catch(error){
         console.log(error)
-
     }
 });
