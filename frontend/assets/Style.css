@@ -15,10 +15,17 @@ h1{
     background-color: #c7befa;
     border-radius: 2vh;
 }
+#ActualAnswer, #ActualQuestion {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    margin-left: 2vh;
+}
 footer {
     padding-bottom: 3vh;
     padding-top: 3vh;
     background-color: #17203D;
+    width: 100%;
+    color: rgb(233, 233, 233);
 }
 hr{
     width: 20vh;
@@ -27,13 +34,74 @@ hr{
     height: 0.5vh;
     background-color: #6552D0
 }
-.FooterText{
 
-    
+#AnswerButton{
+    float: right;
+    border-radius: 2vh;
+    padding-left: 4vh;
+    padding-right: 4vh;
+    border: none;
+    color: black;
+    background-color: #cccccc7f;
+}
+#AnswerButton:hover {
+    background-color: #cccccc; /* Lighter blue on hover */
+}
+
+
+.FooterText{
+    font-size: 0.9rem;
+    margin-bottom: 0;
+    bottom: 0;
     color: rgb(233, 233, 233);
-    
 }
 
 #FooterSection {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 120%;
     background-color: #17203D;
+}
+.Text{
+    font-family:'Roboto'
+}
+#BottomFiller{
+    border: 20vh;
+    margin-top: 50vh;
+    margin-bottom: 50vh;
+}
+p, label{
+    font-weight:450;
+}
+
+#Footer .btn-floating:hover {
+    background-color: #0059b3; /* Lighter blue on hover */
+}
+
+#Footer hr {
+    margin: 5px 0;
+    border: 0.2px solid #cccccc;
+}
+.FooterButtonLink a{
+    text-decoration: none;
+}
+.ButtonIcons{
+    border-radius: 1.5vh;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    border: none;
+    
+}
+#Github.ButtonIcons{
+    background-color: black;
+    color: white;
+}
+#Youtube.ButtonIcons{
+    background-color: white;
+    color: red;
+}
+
+#CreatorsDesc{
+    text-decoration: none;
 }
